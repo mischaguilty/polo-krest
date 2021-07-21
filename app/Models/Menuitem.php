@@ -16,7 +16,6 @@ class Menuitem extends Model
         'topnavitem_id',
         'position',
         'name',
-        'uri',
     ];
 
     public function topnavitem(): BelongsTo

@@ -15,8 +15,7 @@ class CreateTopnavitemsTable extends Migration
     {
         Schema::create('topnavitems', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('uri')->index()->nullable()->default('#');
+            $table->text('name');
             $table->unsignedInteger('position')->nullable()->default(0)->index();
             $table->timestamps();
         });

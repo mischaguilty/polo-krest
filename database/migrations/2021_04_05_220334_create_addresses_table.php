@@ -19,14 +19,14 @@ class CreateAddressesTable extends Migration
             $table->string('place_id')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->string('country')->nullable()->index()->default(__('address.default_country'));
-            $table->string('region')->nullable()->default(__('address.default_region'));
-            $table->string('zip_code')->nullable()->default('address.default_region');
-            $table->string('city')->nullable()->index()->default('address.default_city');
-            $table->string('district')->nullable();
-            $table->string('street')->index()->nullable();
-            $table->string('building')->index()->nullable();
-            $table->string('flat')->nullable();
+            $table->text('country')->nullable();
+            $table->text('region')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->text('city')->nullable();
+            $table->text('district')->nullable();
+            $table->text('street')->nullable();
+            $table->text('building')->nullable();
+            $table->text('flat')->nullable();
             $table->timestamps();
         });
     }

@@ -1,7 +1,5 @@
 <?php
 
-use Filament\FilamentServiceProvider;
-
 return [
 
     /*
@@ -167,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-FilamentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -231,7 +228,6 @@ FilamentServiceProvider::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Filament' => Filament\Filament::class,
 
     ],
 

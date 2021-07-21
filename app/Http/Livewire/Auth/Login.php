@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Auth;
 
-class Login extends \Filament\Http\Livewire\Auth\Login
+use Livewire\Component;
+use Redbastie\Bootwire\Traits\LogsUsersIn;
+
+class Login extends Component
 {
-    public function render()
-    {
-        return view('welcome');
-    }
+    use LogsUsersIn;
 }

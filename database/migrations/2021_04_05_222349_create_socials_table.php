@@ -15,7 +15,7 @@ class CreateSocialsTable extends Migration
     {
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
+            $table->text('name')->index();
             $table->string('url')->unique();
             $table->string('chat_id')->nullable();
             $table->string('icon')->nullable();

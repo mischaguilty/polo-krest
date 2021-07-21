@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\WorkingDay;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ class CreateWorkingsTable extends Migration
     {
         Schema::create('workings', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\WorkingDay::class, 'working_day_id');
+            $table->foreignIdFor(WorkingDay::class, 'working_day_id');
             $table->unsignedInteger('start')->index();
             $table->unsignedInteger('stop')->index();
             $table->timestamps();

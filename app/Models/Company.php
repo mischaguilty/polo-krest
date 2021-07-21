@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\HasAddress;
-use App\Traits\HasPage;
 use App\Traits\HasPhones;
 use App\Traits\HasSocials;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,14 +18,12 @@ class Company extends Model
     use HasAddress;
     use HasPhones;
     use HasSocials;
-    use HasPage;
 
     protected $table = 'companies';
 
     protected $fillable = [
         'name',
         'description',
-        'logo',
     ];
 
     public function offices(): HasMany
@@ -50,7 +47,7 @@ class Company extends Model
         return $title ?? $this->name;
     }
 
-    public function routeNotificationForTelegram()
+    public function routeNotificationForTelegram(): string
     {
         return '1666886280';
 //        return optional($this->socials()->firstWhere([

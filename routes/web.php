@@ -14,21 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('dash')->group(function () {
+Route::get('/', \App\Http\Livewire\Welcome::class)->name('welcome');
+
+Route::middleware('guest')->group(function () {
     Route::get('login', \App\Http\Livewire\Auth\Login::class)->name('login');
+    Route::get('password/forgot', \App\Http\Livewire\Auth\Password\Forgot::class)->name('password.forgot');
+    Route::get('password/reset/{token}/{email}', \App\Http\Livewire\Auth\Password\Reset::class)->name('password.reset');
+    Route::get('register', \App\Http\Livewire\Auth\Register::class)->name('register');
 });
 
-Route::get('/', function() {
-    return redirect()->to(app()->getLocale());
-});
-
-
-Route::group([
-    'middleware' => 'lang',
-], function() {
-    Route::prefix('{lang}')->group(function() {
-        Route::get('', function () {
-            return view('welcome');
-        })->name('welcome');
-    });
+Route::middleware('auth')->group(function () {
+    Route::get('logout', \App\Http\Livewire\Auth\Login::class)->name('logout');
+    Route::get('home', \App\Http\Livewire\Home::class)->name('home');
 });

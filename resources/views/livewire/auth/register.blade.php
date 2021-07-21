@@ -1,4 +1,4 @@
-@section('title', __('Login'))
+@section('title', __('Register'))
 
 <main class="container py-4">
     <div class="row justify-content-center">
@@ -8,7 +8,14 @@
                     @yield('title')
                 </div>
                 <div class="card-body">
-                    <form wire:submit.prevent="login">
+                    <form wire:submit.prevent="register">
+                        <div class="form-group">
+                            <label for="name">{{ __('Name') }}</label>
+                            <input type="text" id="name" class="form-control @error('name') is-invalid @enderror"
+                                   wire:model.defer="state.name">
+                            @error('name') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                        </div>
+
                         <div class="form-group">
                             <label for="email">{{ __('Email') }}</label>
                             <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
@@ -23,22 +30,13 @@
                             @error('password') <span class="invalid-feedback">{{ $message }}</span> @enderror
                         </div>
 
-                        <div class="row align-items-center mb-3">
-                            <div class="col">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="remember" class="custom-control-input"
-                                           wire:model.defer="state.remember">
-                                    <label for="remember" class="custom-control-label">{{ __('Remember') }}</label>
-                                </div>
-                            </div>
-                            @if(Route::has('password.forgot'))
-                                <div class="col-auto">
-                                    <a href="{{ route('password.forgot') }}">{{ __('Forgot Password?') }}</a>
-                                </div>
-                            @endif
+                        <div class="form-group">
+                            <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                            <input type="password" id="password_confirmation" class="form-control"
+                                   wire:model.defer="state.password_confirmation">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
+                        <button type="submit" class="btn btn-primary btn-block">{{ __('Register') }}</button>
                     </form>
                 </div>
             </div>

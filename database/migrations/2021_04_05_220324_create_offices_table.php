@@ -17,7 +17,7 @@ class CreateOfficesTable extends Migration
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Company::class, 'company_id');
-            $table->string('name')->index()->default(__('office.default'));
+            $table->string('name')->index()->nullable();
             $table->timestamps();
         });
     }

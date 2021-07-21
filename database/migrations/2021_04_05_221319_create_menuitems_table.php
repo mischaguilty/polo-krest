@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Topnavitem;
+use App\Models\Menuitem;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +16,8 @@ class CreateMenuitemsTable extends Migration
     {
         Schema::create('menuitems', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Topnavitem::class, 'topnavitem_id');
-            $table->string('name')->unique();
-            $table->string('uri')->index()->default('#');
+            $table->foreignIdFor(Menuitem::class, 'toplevel_id')->default(0);
+            $table->text('name');
             $table->unsignedInteger('position')->nullable()->default(0)->index();
             $table->timestamps();
         });
