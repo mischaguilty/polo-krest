@@ -1,0 +1,16 @@
+/.idea
+/node_modules
+/public/hot
+/public/storage
+/public/fonts/vendor/@fortawesome/fontawesome-free/.
+/storage/*.key
+/vendor
+.DS_Store
+.env
+.env.backup
+.phpunit.result.cache
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
