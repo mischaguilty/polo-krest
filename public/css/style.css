@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Inter:100,200,400,500,600,700,800|Railway:300,400,600,700,800);
 @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,400,500,600,700,800|Railway:300,400,600,700,800);
 /*  Mixins */
 /*  Fonts */
 /* ---------------------------------------------------------------
@@ -15955,7 +15955,7 @@ Forms - Dark
        text-align: center;
        font-size: 1.5em;
      } */
-  /* 
+  /*
   background-color: #fff;
     border-radius: 6px;
     width: auto;
@@ -15981,7 +15981,7 @@ Forms - Dark
      } */
 }
 
-/* 
+/*
 .floating-mobile-menu {
     position: fixed;
     bottom: -61px;

@@ -2,6 +2,7 @@
 
 namespace App\Actions\Install;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -9,20 +10,21 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class CreateAdmin
 {
     use AsAction;
-
-    private $usersTable = 'filament_users';
+    public $commandSignature = 'install:create-admin {name?}';
 
     public function handle(array $userData = null)
     {
         return optional($userData ?? [
                 'email' => 'go.myke@gmail.com',
                 'name' => 'mischa',
-                'is_admin' => !0,
                 'password' => bcrypt('123123123'),
         ], function (array $data) {
-            return Schema::hasTable($this->usersTable)
-                ? DB::table($this->usersTable)->insert($data)
-                : false;
+            return Schema::hasTable('users') && DB::table('users')->insert($data);
         });
+    }
+
+    public function AsCommand(Command $command)
+    {
+        $this->handle();
     }
 }

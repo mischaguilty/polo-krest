@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Menuitem extends Model
 {
@@ -13,13 +13,32 @@ class Menuitem extends Model
     protected $table = 'menuitems';
 
     protected $fillable = [
-        'topnavitem_id',
+        'toplevel_id',
         'position',
         'name',
     ];
 
-    public function topnavitem(): BelongsTo
+    public function scopeTopmenu(Builder $builder)
     {
-        return $this->belongsTo(Topnavitem::class, 'topnavitem_id', 'id');
+        $builder->where([
+            'toplevel_id' => 0,
+        ]);
+    }
+
+    public function toplevel()
+    {
+        return Menuitem::query()->find($this->toplevel_id);
+    }
+
+    public function children()
+    {
+        return Menuitem::query()->where([
+            'toplevel_id' => $this->getKey(),
+        ])->get();
+    }
+
+    public function getChildrenCountAttribute(): int
+    {
+        return $this->children()->count();
     }
 }

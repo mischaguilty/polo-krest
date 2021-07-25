@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Translatable\HasTranslations;
 
 class Company extends Model
 {
@@ -19,9 +20,16 @@ class Company extends Model
     use HasPhones;
     use HasSocials;
 
+    use HasTranslations;
+
     protected $table = 'companies';
 
     protected $fillable = [
+        'name',
+        'description',
+    ];
+
+    protected $translatable = [
         'name',
         'description',
     ];

@@ -2,34 +2,17 @@
     <div id="mainMenu">
         <div class="container">
             <nav>
-                <!--Left Menu-->
                 <ul>
                     @forelse($items as $item)
-                        @if ($loop->iteration >= $loop->count / 2)
-                            @break
-                        @endif
-                        <li @if($item->menuitems_count) class="dropdown" @endif>
-                            @forelse($item->menuitems as $menu)
-                                @if($loop->first)
-                                    <a href="{{ url($item->uri) }}">{{ $item->name }}</a>
-                                    <ul class="dropdown-menu">
-                                @endif
-                                        <li>
-                                            <a href="{{ url($menu->uri) }}">{{ $menu->name }}</a>
-                                        </li>
-                                @if($loop->last)
-                                    </ul>
-                                @endif
-                            @empty
-                            @endforelse
+                        <li class="{{ $item->children_count ? 'dropdown' : '' }}">
+                            <a href="{{ Str::slug($item->name) }}">
+                                {{ $item->name }}
+                            </a>
                         </li>
                     @empty
                     @endforelse
-{{--                    <li><a href="{{ route('welcome') }}">Home</a></li>--}}
-{{--                    <li class="dropdown">--}}
-{{--                        <a href="#">--}}
-{{--                            Layout--}}
-{{--                        </a>--}}
+{{--                    <li><a href="index.html">Home</a></li>--}}
+{{--                    <li class="dropdown"><a href="#">Layout</a>--}}
 {{--                        <ul class="dropdown-menu">--}}
 {{--                            <li class="dropdown-submenu"><a href="#">Topbar</a>--}}
 {{--                                <ul class="dropdown-menu">--}}
@@ -323,30 +306,6 @@
 {{--                            </li>--}}
 {{--                        </ul>--}}
 {{--                    </li>--}}
-                </ul>
-                <!--Right Menu-->
-                <ul>
-                    @forelse($items as $item)
-                        @if ($loop->iteration <= $loop->count / 2)
-                            @continue
-                        @endif
-                        <li @if($item->menuitems_count) class="dropdown" @endif>
-                            @forelse($item->menuitems as $menu)
-                                @if($loop->first)
-                                    <a href="{{ url($item->uri) }}">{{ $item->name }}</a>
-                                    <ul class="dropdown-menu">
-                                        @endif
-                                        <li>
-                                            <a href="{{ url($menu->uri) }}">{{ $menu->name }}</a>
-                                        </li>
-                                        @if($loop->last)
-                                    </ul>
-                                @endif
-                            @empty
-                            @endforelse
-                        </li>
-                    @empty
-                    @endforelse
 {{--                    <li class="dropdown"><a href="#">Pages</a>--}}
 {{--                        <ul class="dropdown-menu">--}}
 {{--                            <li class="dropdown-submenu"><span class="dropdown-menu-title-only">About us</span>--}}

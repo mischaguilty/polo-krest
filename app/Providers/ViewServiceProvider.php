@@ -28,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         if (Schema::hasTable('companies')) {
-            $company = optional(Company::find(1) ?? null, function (Company $company) {
+            optional(Company::find(1) ?? null, function (Company $company) {
                 View::share('company', $company);
             });
         }

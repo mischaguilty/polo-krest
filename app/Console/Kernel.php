@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Actions\Install\CompanyContactsSetup;
+use App\Actions\Install\CreateAdmin;
 use App\Actions\Install\CreateCompany;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,6 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         CreateCompany::class,
+        CompanyContactsSetup::class,
+        CreateAdmin::class,
     ];
 
     /**

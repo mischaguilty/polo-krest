@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 
 @include('layouts.partials.head')
 
@@ -8,23 +8,21 @@
 <div class="body-inner">
 @include('layouts.partials.topbar')
 <!-- Header -->
-    <header id="header" data-transparent="true" class="dark header-logo-center">
+    <header id="header" data-transparent="true" class="dark header-mobile-logo-left">
         <div class="header-inner">
             <div class="container">
-            @isset($company)
                 <!--Logo-->
                     <div id="logo">
-                        <a href="{{ url('/') }}">
-                        <span class="logo-default">
-                            {{ $company->name }}
-                        </span>
+                        <a href="{{ route('welcome') }}">
+                            <span class="logo-default">
+                                {{ $company->name }}
+                            </span>
                             <span class="logo-dark">
-                            {{ $company->name }}
-                        </span>
+                                {{ $company->name }}
+                            </span>
                         </a>
                     </div>
                     <!--End: Logo-->
-            @endisset
             {{--                <!-- Search -->--}}
             {{--                <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>--}}
             {{--                    <form class="search-form" action="search-results-page.html" method="get">--}}
@@ -33,25 +31,28 @@
             {{--                    </form>--}}
             {{--                </div>--}}
             {{--                <!-- end: search -->--}}
-            {{--                <!--Header Extras-->--}}
-            {{--                <div class="header-extras">--}}
-            {{--                    <ul>--}}
-            {{--                        <li>--}}
-            {{--                            <a id="btn-search" href="#"> <i class="icon-search"></i></a>--}}
-            {{--                        </li>--}}
-            {{--                        <li>--}}
-            {{--                            <div class="p-dropdown">--}}
-            {{--                                <a href="#"><i class="icon-globe"></i><span>EN</span></a>--}}
-            {{--                                <ul class="p-dropdown-content">--}}
-            {{--                                    <li><a href="#">French</a></li>--}}
-            {{--                                    <li><a href="#">Spanish</a></li>--}}
-            {{--                                    <li><a href="#">English</a></li>--}}
-            {{--                                </ul>--}}
-            {{--                            </div>--}}
-            {{--                        </li>--}}
-            {{--                    </ul>--}}
-            {{--                </div>--}}
-            {{--                <!--end: Header Extras-->--}}
+                            <!--Header Extras-->
+                            <div class="header-extras">
+                                <ul>
+{{--                                    <li>--}}
+{{--                                        <a id="btn-search" href="#"> <i class="icon-search"></i></a>--}}
+{{--                                    </li>--}}
+                                    <li>
+                                        <div class="p-dropdown">
+                                            <a href="#">
+                                                <i class="icon-globe"></i>
+                                                <span>{{ app()->getLocale() }}</span>
+                                            </a>
+                                            <ul class="p-dropdown-content">
+                                                <li><a href="#">French</a></li>
+                                                <li><a href="#">Spanish</a></li>
+                                                <li><a href="#">English</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--end: Header Extras-->
             <!--Navigation Resposnive Trigger-->
                 <div id="mainMenu-trigger">
                     <a class="lines-button x"><span class="lines"></span></a>
@@ -158,8 +159,8 @@
 <!-- Scroll top -->
 <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
 <!--Plugins-->
-<script src="{{ url('js/app.js') }}"></script>
-{{--<script src="{{ url('js/jquery.js') }}"></script>--}}
+{{--<script src="{{ url('js/app.js') }}"></script>--}}
+<script src="{{ url('js/jquery.js') }}"></script>
 <script src="{{ url('js/plugins.js') }}"></script>
 <!--Template functions-->
 <script src="{{ url('js/functions.js') }}"></script>
