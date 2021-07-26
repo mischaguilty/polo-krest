@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "bastinald/laravel-livewire-ui": "^2.4.16",
+        "cocur/slugify": "dev-real_ukranian",
         "fideloper/proxy": "^4.4.1",
         "fruitcake/laravel-cors": "^2.0.4",
         "guzzlehttp/guzzle": "^7.3.0",
@@ -16,8 +17,8 @@
         "lorisleiva/laravel-actions": "^2.1.5",
         "mcamara/laravel-localization": "^1.6",
         "propaganistas/laravel-phone": "^4.3.0",
-        "spatie/laravel-translatable": "^5.0.1",
-        "cocur/slugify": "dev-real_ukranian"
+        "spatie/laravel-medialibrary": "^9.6",
+        "spatie/laravel-translatable": "^5.0.1"
     },
     "require-dev": {
         "facade/ignition": "^2.11.2",

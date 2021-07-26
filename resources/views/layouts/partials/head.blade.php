@@ -8,14 +8,16 @@
     @stack('prefetch')
 
     @include('layouts.partials.meta')
-
     <link rel="preload" as="style" href="{{ url('css/plugins.css') }}"/>
-    <link rel="preload" as="script" href="{{ asset('css/style.css') }} "/>
-    <link rel="preload" as="script" href="{{ asset('js/app.js') }} "/>
-    <link rel="preload" as="script" href="{{ asset('js/plugins.js') }} "/>
+    <link rel="preload" as="style" href="{{ asset('css/style.css') }} "/>
+{{--    <link rel="preload" as="script" href="{{ asset('js/jquery.js') }} "/>--}}
+{{--    <link rel="preload" as="script" href="{{ asset('js/plugins.js') }} "/>--}}
     @stack('preloads')
 
     <link href="{{ url('css/plugins.css') }}" rel="stylesheet">
     <link href="{{ url('css/style.css') }}" rel="stylesheet">
     @stack('styles')
+    @if($logo = $company->getFirstMedia('logo'))
+    <link rel="icon" type="image/png" href="{{ $logo->getFullUrl() }}">
+    @endif
 </head>

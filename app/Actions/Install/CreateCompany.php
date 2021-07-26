@@ -15,7 +15,7 @@ class CreateCompany
     public function handle(array $companyData = null)
     {
         return optional(Company::create($companyData), function (Company $company) {
-            dd($company);
+            $company->addMediaCollection('logo');
             return $company;
         });
     }

@@ -8,18 +8,18 @@
 <div class="body-inner">
 @include('layouts.partials.topbar')
 <!-- Header -->
-    <header id="header" data-transparent="true" class="dark header-mobile-logo-left">
+    <header id="header" data-transparent="true" class="dark">
         <div class="header-inner">
             <div class="container">
                 <!--Logo-->
                 <div id="logo">
                     <a href="{{ route('welcome') }}">
-                            <span class="logo-default">
-                                {{ $company->name }}
-                            </span>
+                        <span class="logo-default">
+                            {{ $company->name }}
+                        </span>
                         <span class="logo-dark">
-                                {{ $company->name }}
-                            </span>
+                            {{ $company->name }}
+                        </span>
                     </a>
                 </div>
                 <!--End: Logo-->
@@ -53,8 +53,23 @@
                 </div>
                 <!--end: Navigation Resposnive Trigger-->
                 <!--Navigation-->
-            @livewire('top-nav')
-            <!--end: Navigation-->
+                <div id="mainMenu">
+                    <div class="container">
+                        <nav>
+                            <ul>
+                                @forelse(\App\Models\Menuitem::topmenu()->get() as $item)
+                                    <li class="{{ $item->children_count ? 'dropdown' : '' }}">
+                                        <a href="{{ url($item->slug->name) }}">
+                                            {{ $item->name }}
+                                        </a>
+                                    </li>
+                                @empty
+                                @endforelse
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!--end: Navigation-->
             </div>
         </div>
     </header>

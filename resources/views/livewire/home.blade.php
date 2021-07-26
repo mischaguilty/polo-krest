@@ -1,16 +1,52 @@
-@section('title', __('Dashboard'))
+@section('title', $company->name.' '.__('Dashboard'))
 
-<main class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    @yield('title')
-                </div>
-                <div class="card-body">
-                    {{ __('You are logged in!') }}
-                </div>
+<div class="container my-3">
+    <h1>
+        @yield('title')
+    </h1>
+    <form wire:submit.prevent="save">
+        <x-bs::label label="{{ __('Logo') }}" />
+        @if($logo && method_exists($logo, 'temporaryUrl'))
+            <x-bs::image :asset="$logo->temporaryUrl()" height="50" width="auto" wire:click="resetLogo"/>
+        @elseif($logo && method_exists($logo, 'getFullUrl'))
+            <x-bs::image :asset="$logo->getFullUrl()" height="50" width="auto" wire:click="resetLogo"/>
+        @else
+            <x-bs::input type="file" class="shadow-none" wire:model="logo" />
+        @endif
+        <livewire:loader wire:target="logo" />
+
+        <nav class="my-3">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                @forelse(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys() as $locale)
+                    <button class="nav-link {{ $locale === $currentLocale ? 'active' : '' }}"
+                            id="nav-{{ $locale }}-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-{{ $locale }}"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-{{ $locale }}"
+                            aria-selected="{{ $currentLocale === $locale ? 'true' : 'false' }}"
+                            wire:click="$set('currentLocale', '{{ $locale }}')">
+                        {{ \Illuminate\Support\Str::upper($locale) }}
+                    </button>
+                @empty
+                @endforelse
             </div>
+        </nav>
+        <div class="tab-content mt-3" id="nav-tabContent">
+            @forelse(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys() as $locale)
+                <div class="tab-pane fade {{ $currentLocale === $locale ? 'show active' : '' }}"
+                     id="nav-{{ $locale }}"
+                     role="tabpanel"
+                     aria-labelledby="nav-{{ $locale }}-tab">
+                    <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none"/>
+                </div>
+            @empty
+            @endforelse
         </div>
-    </div>
-</main>
+        <div class="d-inline-flex justify-content-between">
+            <x-bs::button :label="__('Cancel')" />
+            <x-bs::button :label="__('Save')" type="submit"/>
+        </div>
+    </form>
+</div>

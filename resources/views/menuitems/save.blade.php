@@ -8,15 +8,15 @@
         </div>
         <div class="modal-body d-grid gap-3">
             <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <div class="nav nav-tabs" id="nav-save-tab" role="tablist">
                     @forelse(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys() as $locale)
                         <button class="nav-link {{ $locale === $currentLocale ? 'active' : '' }}"
-                                id="nav-{{ $locale }}-tab"
+                                id="nav-save-{{ $locale }}-tab"
                                 data-bs-toggle="tab"
-                                data-bs-target="#nav-{{ $locale }}"
+                                data-bs-target="#nav-save-{{ $locale }}"
                                 type="button"
                                 role="tab"
-                                aria-controls="nav-{{ $locale }}"
+                                aria-controls="nav-save-{{ $locale }}"
                                 aria-selected="{{ $currentLocale === $locale ? 'true' : 'false' }}"
                                 wire:click="$set('currentLocale', '{{ $locale }}')">
                             {{ \Illuminate\Support\Str::upper($locale) }}
@@ -25,14 +25,16 @@
                     @endforelse
                 </div>
             </nav>
-            <div class="tab-content" id="nav-tabContent">
+            <div class="tab-content" id="nav-save-tabContent">
                 @forelse(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys() as $locale)
                     <div class="tab-pane fade {{ $currentLocale === $locale ? 'show active' : '' }}"
-                         id="nav-{{ $locale }}"
+                         id="nav-save-{{ $locale }}"
                          role="tabpanel"
-                         aria-labelledby="nav-{{ $locale }}-tab">
-                        <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none"/>
-                        <x-bs::help :label="__('Slug').' '.$slug[$locale]" />
+                         aria-labelledby="nav-save-{{ $locale }}-tab">
+                        <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none" />
+                        @isset($slug)
+                            <x-bs::help label="{{ $slug[$locale] }}" />
+                        @endisset
                     </div>
                 @empty
                 @endforelse

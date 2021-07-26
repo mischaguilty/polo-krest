@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Translatable\HasTranslations;
 
-class Company extends Model
+class Company extends Model implements HasMedia
 {
     use HasFactory;
     use Notifiable;
@@ -21,6 +21,9 @@ class Company extends Model
     use HasSocials;
 
     use HasTranslations;
+    use InteractsWithMedia;
+
+    public static string $DEFAULT_NAME = 'Test Company';
 
     protected $table = 'companies';
 
@@ -29,7 +32,7 @@ class Company extends Model
         'description',
     ];
 
-    protected $translatable = [
+    protected array $translatable = [
         'name',
         'description',
     ];

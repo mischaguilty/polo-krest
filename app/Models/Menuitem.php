@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Cocur\Slugify\RuleProvider\DefaultRuleProvider;
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,14 +10,13 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
-use Throwable;
 
 class Menuitem extends Model
 {
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = [
+    public array $translatable = [
         'name',
     ];
 
@@ -59,9 +57,13 @@ class Menuitem extends Model
 
     public function scopeTopmenu(Builder $builder)
     {
-        $builder->where([
-            'toplevel_id' => 0,
-        ]);
+        $builder->where(function (Builder $builder) {
+            $builder->where([
+                'toplevel_id' => 0,
+            ])->orWhere([
+                'toplevel_id' => null,
+            ]);
+        });
     }
 
     public function toplevel()
