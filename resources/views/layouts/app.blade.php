@@ -9,8 +9,13 @@
 
     <livewire:styles/>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="icon" href="{{ mix('images/icon-fav.png') }}">
-    <link rel="apple-touch-icon" href="{{ mix('images/icon-touch.png') }}">
+    @if($logo = $company->getFirstMedia('logo'))
+        <link rel="icon" href="{{ $logo->getFullUrl() }}">
+        <link rel="apple-touch-icon" href="{{ $logo->getFullUrl() }}">
+    @else
+        <link rel="icon" href="{{ mix('images/icon-fav.png') }}">
+        <link rel="apple-touch-icon" href="{{ mix('images/icon-touch.png') }}">
+    @endif
     <link rel="manifest" href="{{ mix('json/manifest.json') }}">
 </head>
 <body class="d-flex flex-column bg-light h-100">
