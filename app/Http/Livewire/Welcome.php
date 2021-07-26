@@ -4,16 +4,30 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Welcome extends Component
 {
-    public function route(): \Illuminate\Routing\Route
+    public function route()
     {
-        return Route::get('/', static::class)->name('welcome');
+        return Route::group([
+            'prefix' => LaravelLocalization::setLocale(),
+            'middleware' => [
+                'localize',
+                'localizationRedirect',
+                'localeSessionRedirect',
+                'localeCookieRedirect',
+                'localeViewPath'
+            ],
+        ], function () {
+            Route::get('/', static::class)->name('welcome');
+        });
     }
 
     public function render()
     {
-        return view('welcome')->layout('layouts.guest');
+        return view('livewire.welcome')->with([
+            'slides' => [],
+        ])->layout('livewire.layouts.guest');
     }
 }

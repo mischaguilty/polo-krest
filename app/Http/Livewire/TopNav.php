@@ -11,9 +11,6 @@ class TopNav extends Component
     {
         return view('livewire.top-nav')->with([
             'items' => Menuitem::topmenu()->get(),
-//                Menuitem::query()->where([
-//                'toplevel_id' => 0,
-//            ])->get(),
         ]);
     }
 }
