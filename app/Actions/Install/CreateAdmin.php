@@ -10,7 +10,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 class CreateAdmin
 {
     use AsAction;
-    public $commandSignature = 'install:create-admin {name?}';
+    public string $commandSignature = 'install:create-admin {name?}';
 
     public function handle(array $userData = null)
     {
@@ -23,7 +23,7 @@ class CreateAdmin
         });
     }
 
-    public function AsCommand(Command $command)
+    public function AsCommand()
     {
         $this->handle();
     }

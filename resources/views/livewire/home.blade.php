@@ -39,13 +39,18 @@
                      id="nav-{{ $locale }}"
                      role="tabpanel"
                      aria-labelledby="nav-{{ $locale }}-tab">
-                    <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none"/>
+                    <div class="my-3">
+                        <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none"/>
+                    </div>
+                    <div class="my-3">
+                        <x-bs::textarea label="{{ __('Description').' '.strtoupper($locale) }}" class="shadow-none" wire:model.defer="description.{{$locale}}"/>
+                    </div>
                 </div>
             @empty
             @endforelse
         </div>
-        <div class="d-inline-flex justify-content-between">
-            <x-bs::button :label="__('Cancel')" />
+        <div class="d-inline-flex justify-content-between mt-5 w-100">
+            <x-bs::button :label="__('Cancel')" color="light"/>
             <x-bs::button :label="__('Save')" type="submit"/>
         </div>
     </form>

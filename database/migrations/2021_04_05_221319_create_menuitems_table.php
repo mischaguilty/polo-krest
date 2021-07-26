@@ -18,6 +18,7 @@ class CreateMenuitemsTable extends Migration
             $table->id();
             $table->foreignIdFor(Menuitem::class, 'toplevel_id')->default(0);
             $table->text('name');
+            $table->string('route_name')->default('about')->unique();
             $table->unsignedInteger('position')->nullable()->default(0)->index();
             $table->timestamps();
         });

@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Company;
-use App\Models\Media;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -16,7 +15,7 @@ class Home extends Component
 {
     use WithFileUploads;
 
-    public $logo, $name, $currentLocale;
+    public $logo, $name, $description, $currentLocale;
     public Company $company;
 
     public function mount()
@@ -69,10 +68,7 @@ class Home extends Component
                 'image',
             ],
         ]);
-    }
 
-    public function save()
-    {
         try {
             $this->company->addMedia(storage_path(implode(DIRECTORY_SEPARATOR, [
                 'app',
@@ -89,15 +85,28 @@ class Home extends Component
                 ->save();
             $this->emit('$refresh');
         } catch (\Throwable $exception) {
-            dd($exception->getMessage());
+            $this->emit('showToast', 'danger', $exception->getMessage());
         }
+    }
+
+    public function save()
+    {
+        $data = $this->validate([
+            'name.*' => ['required', 'string', 'max:50'],
+            'description.*' => ['nullable', 'string', 'max:5000'],
+        ]);
+        $this->company->update($data);
+        $this->emit('showToast', 'success', __('Company data was updated'));
+        $this->emit('$refresh');
     }
 
     public function resetLogo()
     {
-        optional( $this->company->getFirstMedia('logo') ?? null, function (Media $media) {
+        optional( $this->company->getFirstMedia('logo') ?? null, function ($media) {
             try {
                 $this->company->deleteMedia($media->id);
+            } catch (\Throwable $exception) {
+                $this->emit('showToast', 'danger', $exception->getMessage());
             } finally {
                 return $media;
             }

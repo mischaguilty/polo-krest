@@ -59,7 +59,7 @@
                             <ul>
                                 @forelse(\App\Models\Menuitem::topmenu()->get() as $item)
                                     <li class="{{ $item->children_count ? 'dropdown' : '' }}">
-                                        <a href="{{ url($item->slug->name) }}">
+                                        <a href="{{ route($item->route_name) }}">
                                             {{ $item->name }}
                                         </a>
                                     </li>
@@ -80,85 +80,86 @@
 <!-- Content -->
     <section id="page-content">
         <div class="container">
-            <div class="grid-system-demo-live">
-                <div class="row">
-                    <div class="col-lg-12 p-t-80 p-b-20">
-                        <div class="heading-text heading-section">
-                            <h2>Set your goals high, and don't stop till you get there.</h2>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        Vitae adipiscing turpis. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In
-                        iaculis viverra neque, ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum
-                        stie. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In iaculis viverra neque,
-                        ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum.
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                        ante lobortis id. In viverra ipsum stie.
-                    </div>
-                    <div class="col-lg-6">
-                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                        ante lobortis id. In viverra ipsum stie.
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                        ante lobortis id. In viverra ipsum stie.
-                    </div>
-                    <div class="col-lg-4">
-                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                        ante lobortis id. In viverra ipsum stie.
-                    </div>
-                    <div class="col-lg-4">
-                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                        ante lobortis id. In viverra ipsum stie.
-                    </div>
-                    r
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                        <div class="col-lg-3">
-                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                        <div class="col-lg-3">
-                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                        <div class="col-lg-3">
-                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                        <div class="col-lg-8">
-                            <h5>2/3 Width (col-lg-8)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id
-                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend
-                            ante lobortis id. In viverra ipsum stie.
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="grid-system-demo-live">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-12 p-t-80 p-b-20">--}}
+{{--                        <div class="heading-text heading-section">--}}
+{{--                            <h2>Set your goals high, and don't stop till you get there.</h2>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-12">--}}
+{{--                        Vitae adipiscing turpis. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In--}}
+{{--                        iaculis viverra neque, ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum--}}
+{{--                        stie. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In iaculis viverra neque,--}}
+{{--                        ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum.--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-6">--}}
+{{--                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                        ante lobortis id. In viverra ipsum stie.--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-6">--}}
+{{--                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                        ante lobortis id. In viverra ipsum stie.--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                        ante lobortis id. In viverra ipsum stie.--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                        ante lobortis id. In viverra ipsum stie.--}}
+{{--                    </div>--}}
+{{--                    <div class="col-lg-4">--}}
+{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                        ante lobortis id. In viverra ipsum stie.--}}
+{{--                    </div>--}}
+{{--                    r--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-lg-3">--}}
+{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-3">--}}
+{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-3">--}}
+{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-3">--}}
+{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-lg-4">--}}
+{{--                            <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-8">--}}
+{{--                            <h5>2/3 Width (col-lg-8)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
+{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
+{{--                            ante lobortis id. In viverra ipsum stie.--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+            {{ $slot }}
         </div>
     </section>
 <!-- end: Content -->

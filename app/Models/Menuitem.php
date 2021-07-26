@@ -23,6 +23,7 @@ class Menuitem extends Model
     protected $table = 'menuitems';
 
     protected $fillable = [
+        'route_name',
         'toplevel_id',
         'position',
         'name',

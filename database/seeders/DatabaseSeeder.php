@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Actions\Install\CreateAdmin;
 use App\Actions\Install\CreateCompany;
+use App\Actions\Install\CreateMenu;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,5 +18,6 @@ class DatabaseSeeder extends Seeder
                 'ru' => 'Вечность',
             ],
         ]);
+        CreateMenu::make()->handle();
     }
 }

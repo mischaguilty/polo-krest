@@ -8,9 +8,9 @@
                         <div class="widget-title">
                             {{ $company->name }}
                         </div>
-                        <p class="mb-5">
-                            {{ $company->description }}
-                        </p>
+{{--                        <p class="mb-5">--}}
+{{--                            {{ $company->description }}--}}
+{{--                        </p>--}}
                         <a href="{{ route('welcome', ['lang' => app()->getLocale(),]) }}" class="btn btn-inverted" target="_blank">
                             {{ __('call-to-action') }}
                         </a>
