@@ -2,13 +2,25 @@
 
 namespace App\Models;
 
+use Cocur\Slugify\RuleProvider\DefaultRuleProvider;
+use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Spatie\Translatable\HasTranslations;
+use Throwable;
 
 class Menuitem extends Model
 {
     use HasFactory;
+    use HasTranslations;
+
+    public $translatable = [
+        'name',
+    ];
 
     protected $table = 'menuitems';
 
@@ -17,6 +29,33 @@ class Menuitem extends Model
         'position',
         'name',
     ];
+
+    protected static function booted()
+    {
+        static::saved(function (Model $model) {
+            optional($model->isDirty('name') ? $model : null, function (Model $model) {
+                optional($model->slug()->first() ?? $model->slug()->create(), function (Slug $slug) use ($model) {
+                    foreach (LaravelLocalization::getSupportedLocales() as $localeKey => $supportedLocale) {
+                        $ruleSetName = optional($supportedLocale['name'] ?? null, function (string $supportedLocaleName) {
+                            return strtolower($supportedLocaleName);
+                        });
+                        $localizedSlugName = optional($ruleSetName ?? null, function (string $ruleSetName) use ($model, $localeKey) {
+                                try {
+                                    $slugify = new Slugify();
+                                    $slugify->activateRuleSet($ruleSetName);
+                                    return $slugify->slugify($model->getTrabslation('name', $localeKey));
+                                } finally {
+                                    return Str::slug($model->getTranslation('name', $localeKey));
+                                }
+                            }) ?? Str::slug($model->getTranslation('name', $localeKey));
+
+                        $slug->setTranslation('name', $localeKey, $localizedSlugName);
+                        $slug->save();
+                    }
+                });
+            });
+        });
+    }
 
     public function scopeTopmenu(Builder $builder)
     {
@@ -40,5 +79,10 @@ class Menuitem extends Model
     public function getChildrenCountAttribute(): int
     {
         return $this->children()->count();
+    }
+
+    public function slug(): MorphOne
+    {
+        return $this->morphOne(Slug::class, 'sluggable', 'sluggable_type', 'sluggable_id', 'id');
     }
 }

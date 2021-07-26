@@ -16,6 +16,8 @@
                         <x-bs::nav-link :label="__('Login')" route="login"/>
                         <x-bs::nav-link :label="__('Register')" route="register"/>
                     @else
+                        <x-bs::nav-link :label="__('Menu')" route="menu" />
+
                         <x-bs::nav-dropdown icon="user-circle" :label="Auth::user()->name">
                             <x-bs::dropdown-item :label="__('Update Profile')"
                                 wire:click="$emit('showModal', 'auth.profile-update')"/>
