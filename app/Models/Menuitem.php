@@ -32,26 +32,28 @@ class Menuitem extends Model
     protected static function booted()
     {
         static::saved(function (Model $model) {
-            optional($model->isDirty('name') ? $model : null, function (Model $model) {
-                optional($model->slug()->first() ?? $model->slug()->create(), function (Slug $slug) use ($model) {
-                    foreach (LaravelLocalization::getSupportedLocales() as $localeKey => $supportedLocale) {
-                        $ruleSetName = optional($supportedLocale['name'] ?? null, function (string $supportedLocaleName) {
-                            return strtolower($supportedLocaleName);
-                        });
-                        $localizedSlugName = optional($ruleSetName ?? null, function (string $ruleSetName) use ($model, $localeKey) {
-                                try {
-                                    $slugify = new Slugify();
-                                    $slugify->activateRuleSet($ruleSetName);
-                                    return $slugify->slugify($model->getTrabslation('name', $localeKey));
-                                } finally {
-                                    return Str::slug($model->getTranslation('name', $localeKey));
-                                }
-                            }) ?? Str::slug($model->getTranslation('name', $localeKey));
+            optional($model->isDirty('name') ? $model->load(['slug']) : null, function (Model $model) {
+                if (method_exists($model, 'slug')) {
+                    optional($model->slug ?? $model->slug()->create(), function (Slug $slug) {
+                        foreach (LaravelLocalization::getSupportedLocales() as $localeKey => $supportedLocale) {
+                            $ruleSetName = optional($supportedLocale['name'] ?? null, function (string $supportedLocaleName) {
+                                return strtolower($supportedLocaleName);
+                            });
+                            $localizedSlugName = optional($ruleSetName ?? null, function (string $ruleSetName) use ($slug, $localeKey) {
+                                    try {
+                                        $slugify = new Slugify();
+                                        $slugify->activateRuleSet($ruleSetName);
+                                        return $slugify->slugify($slug->sluggable->getTranslation('name', $localeKey));
+                                    } finally {
+                                        return Str::slug($slug->sluggable->getTranslation('name', $localeKey));
+                                    }
+                                }) ?? Str::slug($slug->sluggable->getTranslation('name', $localeKey));
 
-                        $slug->setTranslation('name', $localeKey, $localizedSlugName);
-                        $slug->save();
-                    }
-                });
+                            $slug->setTranslation('name', $localeKey, $localizedSlugName);
+                            $slug->save();
+                        }
+                    });
+                }
             });
         });
     }

@@ -2,10 +2,10 @@
     @section('title', $company->name)
     @section('slider')
     <!-- Inspiro Slider -->
-    <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-height-xs="360">
+    <div id="slider" class="inspiro-slider dots-creative" data-height-xs="360">
     @forelse($slides as $slide)
         <!-- Slide 1 -->
-            <div class="slide kenburns" style="background-image:url({{ asset($slide['picure']) }});">
+            <div class="slide kenburns" style="background-image:url({{ url($slide['picture']) }});">
                 <div class="bg-overlay"></div>
                 <div class="container">
                     <div class="slide-captions text-center text-light">

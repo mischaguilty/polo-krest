@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Schema\Blueprint;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
@@ -13,11 +14,9 @@ class Slug extends Model
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = [
+    public array $translatable = [
         'name',
     ];
-
-    protected $guarded = [];
 
     public function migration(Blueprint $table)
     {
@@ -37,6 +36,11 @@ class Slug extends Model
                 ];
             })->toArray(),
         ];
+    }
+
+    public function sluggable(): MorphTo
+    {
+        return $this->morphTo('sluggable');
     }
 
 }

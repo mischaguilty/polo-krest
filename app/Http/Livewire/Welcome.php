@@ -27,7 +27,16 @@ class Welcome extends Component
     public function render()
     {
         return view('livewire.welcome')->with([
-            'slides' => [],
+            'slides' => [
+                [
+                    'picture' => 'default-bg.jpg',
+                    'text' => 'Lorem Ipsum'
+                ],
+                [
+                    'picture' => 'default-bg.jpg',
+                    'text' => 'Lorem Ipsum'
+                ],
+            ],
         ])->layout('livewire.layouts.guest');
     }
 }

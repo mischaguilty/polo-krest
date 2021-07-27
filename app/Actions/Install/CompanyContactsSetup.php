@@ -3,14 +3,13 @@
 namespace App\Actions\Install;
 
 use App\Models\Company;
-use Illuminate\Console\Command;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CompanyContactsSetup
 {
     use AsAction;
 
-    public $commandSignature = 'install:company-contacts';
+    public string $commandSignature = 'install:company-contacts';
 
 
     public function handle()
@@ -28,25 +27,6 @@ class CompanyContactsSetup
     {
         foreach (
             [
-//                [
-//                    'name' => 'facebook',
-//                    'url' => 'https://www.facebook.com/Ritualzp',
-//                    'icon' => 'fab fa-facebook-square',
-//                ],
-////                [                [
-//                    'name' => 'facebook',
-//                    'url' => 'https://www.facebook.com/Ritualzp',
-//                    'icon' => 'fab fa-facebook-square',
-//                ],
-//                [
-//                    'name' => 'instagram',
-//                    'url' => 'https://www.instagram.com/vichnist_zp',
-//                    'icon' => 'fab fa-instagram',
-//                ],
-//                    'name' => 'instagram',
-//                    'url' => 'https://www.instagram.com/vichnist_zp',
-//                    'icon' => 'fab fa-instagram',
-//                ],
                 [
                     'name' => 'telegram',
                     'url' => 'https://www.t.me/VichnistAgent',
@@ -58,7 +38,7 @@ class CompanyContactsSetup
         }
     }
 
-    public function AsCommand(Command $command)
+    public function AsCommand()
     {
         $this->handle();
     }

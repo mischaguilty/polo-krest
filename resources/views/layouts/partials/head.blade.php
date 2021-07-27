@@ -9,7 +9,7 @@
 
     @include('layouts.partials.meta')
     <link rel="preload" as="style" href="{{ url('css/plugins.css') }}"/>
-    <link rel="preload" as="style" href="{{ asset('css/style.css') }} "/>
+    <link rel="preload" as="style" href="{{ url('css/style.css') }} "/>
 {{--    <link rel="preload" as="script" href="{{ asset('js/jquery.js') }} "/>--}}
 {{--    <link rel="preload" as="script" href="{{ asset('js/plugins.js') }} "/>--}}
     @stack('preloads')
