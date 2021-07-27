@@ -10,7 +10,7 @@ class CreateCompany
 {
     use AsAction;
 
-    public $commandSignature = 'install:create-company';
+    public string $commandSignature = 'install:create-company';
 
     public function handle(array $companyData = null)
     {
