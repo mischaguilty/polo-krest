@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
@@ -27,6 +28,8 @@ class Menuitem extends Model
         'toplevel_id',
         'position',
         'name',
+        'menuable_type',
+        'menuable_id',
     ];
 
     protected static function booted()
@@ -89,5 +92,10 @@ class Menuitem extends Model
     public function slug(): MorphOne
     {
         return $this->morphOne(Slug::class, 'sluggable', 'sluggable_type', 'sluggable_id', 'id');
+    }
+
+    public function menuable(): MorphTo
+    {
+        return $this->morphTo('menuable', 'menuable_type', 'menuable_id', 'id');
     }
 }

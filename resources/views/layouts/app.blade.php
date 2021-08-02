@@ -7,7 +7,7 @@
 
     <title>@hasSection('title') @yield('title') | @endif {{ $company->name }}</title>
 
-    <livewire:styles/>
+    <livewire:styles />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @if($logo = $company->getFirstMedia('logo'))
         <link rel="icon" href="{{ $logo->getFullUrl() }}">
@@ -17,10 +17,10 @@
         <link rel="apple-touch-icon" href="{{ mix('images/icon-touch.png') }}">
     @endif
     <link rel="manifest" href="{{ mix('json/manifest.json') }}">
+    @stack('styles')
 </head>
-<body class="d-flex flex-column bg-light h-100">
+<body class="d-flex flex-column h-100">
     <livewire:layouts.nav/>
-
     <main class="flex-shrink-0">
         {{ $slot }}
     </main>
@@ -32,5 +32,11 @@
     <livewire:toasts/>
     <livewire:scripts/>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script>
+        window.addEventListener('logo:updated', function (e) {
+            window.location = '{{ url()->current() }}';
+        });
+    </script>
+    @stack('scripts')
 </body>
 </html>

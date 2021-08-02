@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Throwable;
 
 class Home extends Component
 {
@@ -84,9 +85,25 @@ class Home extends Component
                 ->toMediaCollection('logo')
                 ->save();
             $this->emit('$refresh');
-        } catch (\Throwable $exception) {
+            $this->dispatchBrowserEvent('logo:updated');
+        } catch (Throwable $exception) {
             $this->emit('showToast', 'danger', $exception->getMessage());
         }
+    }
+
+    public function resetLogo()
+    {
+        optional( $this->company->getFirstMedia('logo') ?? null, function ($media) {
+            try {
+                $this->company->deleteMedia($media->id);
+            } catch (Throwable $exception) {
+                $this->emit('showToast', 'danger', $exception->getMessage());
+            } finally {
+                return $media;
+            }
+        });
+        $this->logo = null;
+        $this->emit('$refresh');
     }
 
     public function save()
@@ -97,21 +114,6 @@ class Home extends Component
         ]);
         $this->company->update($data);
         $this->emit('showToast', 'success', __('Company data was updated'));
-        $this->emit('$refresh');
-    }
-
-    public function resetLogo()
-    {
-        optional( $this->company->getFirstMedia('logo') ?? null, function ($media) {
-            try {
-                $this->company->deleteMedia($media->id);
-            } catch (\Throwable $exception) {
-                $this->emit('showToast', 'danger', $exception->getMessage());
-            } finally {
-                return $media;
-            }
-        });
-        $this->logo = null;
         $this->emit('$refresh');
     }
 }

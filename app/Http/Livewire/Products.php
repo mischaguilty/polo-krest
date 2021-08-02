@@ -20,7 +20,7 @@ class Products extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.products'), static::class)->name('products');
+            Route::get(LaravelLocalization::transRoute('routes.products.index'), static::class)->name('products.index');
         });
     }
 

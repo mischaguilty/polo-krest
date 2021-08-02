@@ -20,7 +20,7 @@ class About extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.about'), static::class)->name('about');
+            Route::any(LaravelLocalization::transRoute('routes.about'), static::class)->name('about');
         });
     }
 

@@ -20,7 +20,7 @@ class Services extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.services'), static::class)->name('services');
+            Route::get(LaravelLocalization::transRoute('routes.services.index'), static::class)->name('services.index');
         });
     }
 

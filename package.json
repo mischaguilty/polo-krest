@@ -21,5 +21,9 @@
         "resolve-url-loader": "^4.0.0",
         "sass": "1.32.13",
         "sass-loader": "^12.1.0"
+    },
+    "dependencies": {
+        "alpinejs": "^3.2.2",
+        "filepond": "^4.28.2"
     }
 }

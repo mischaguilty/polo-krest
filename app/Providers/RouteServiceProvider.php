@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\ProductGroup;
+use App\Models\ServiceGroup;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -46,6 +50,36 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+        });
+
+        Route::bind('productGroup', function ($value) {
+            return optional(ProductGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
+                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
+                        $builder->where([
+                            implode('->', [
+                                'name',
+                                app()->getLocale(),
+                            ]) => $value,
+                        ]);
+                    });
+                })->first() ?? null, function (ProductGroup $productGroup) {
+                return $productGroup;
+            });
+        });
+
+        Route::bind('serviceGroup', function ($value) {
+            return optional(ServiceGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
+                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
+                        $builder->where([
+                            implode('->', [
+                                'name',
+                                app()->getLocale(),
+                            ]) => $value,
+                        ]);
+                    });
+                })->first() ?? null, function (ServiceGroup $serviceGroup) {
+                return $serviceGroup;
+            });
         });
     }
 

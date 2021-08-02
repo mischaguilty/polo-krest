@@ -8,6 +8,7 @@ use App\Traits\HasSocials;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Translatable\HasTranslations;
 
@@ -56,6 +57,11 @@ class Company extends Model implements HasMedia
             ]);
         });
         return $title ?? $this->name;
+    }
+
+    public function menuitem(): MorphMany
+    {
+        return $this->morphMany(Menuitem::class, 'menuable', 'menuable_type', 'menuable_id', 'id');
     }
 
     public function routeNotificationForTelegram(): string

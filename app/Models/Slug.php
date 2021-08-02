@@ -22,7 +22,8 @@ class Slug extends Model
     {
         $table->id();
         $table->text('name')->nullable();
-        $table->morphs('sluggable');
+        $table->string('sluggable_type');
+        $table->unsignedBigInteger('sluggable_id')->default(0);
         $table->timestamp('created_at')->nullable();
         $table->timestamp('updated_at')->nullable();
     }
@@ -40,7 +41,6 @@ class Slug extends Model
 
     public function sluggable(): MorphTo
     {
-        return $this->morphTo('sluggable');
+        return $this->morphTo('sluggable', 'sluggable_type', 'sluggable_id', 'id');
     }
-
 }

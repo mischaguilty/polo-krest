@@ -6,6 +6,8 @@ use App\Actions\Install\CompanyContactsSetup;
 use App\Actions\Install\CreateAdmin;
 use App\Actions\Install\CreateCompany;
 use App\Actions\Install\CreateMenu;
+use App\Actions\Install\CreateProducts;
+use App\Actions\Install\CreateServices;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +26,9 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
         CompanyContactsSetup::make()->handle();
+        CreateProducts::make()->handle();
+        CreateServices::make()->handle();
+
         CreateMenu::make()->handle();
     }
 }

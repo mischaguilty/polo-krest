@@ -1,11 +1,10 @@
 @section('title', $company->name.' '.__('Dashboard'))
-
 <div class="container my-3">
     <h1>
         @yield('title')
     </h1>
     <form wire:submit.prevent="save">
-        <x-bs::label label="{{ __('Logo') }}" />
+        <label class="d-block">{{ __('Logo') }}</label>
         @if($logo && method_exists($logo, 'temporaryUrl'))
             <x-bs::image :asset="$logo->temporaryUrl()" height="50" width="auto" wire:click="resetLogo"/>
         @elseif($logo && method_exists($logo, 'getFullUrl'))
@@ -41,6 +40,7 @@
                      aria-labelledby="nav-{{ $locale }}-tab">
                     <div class="my-3">
                         <x-bs::input :label="__('Name').' '.strtoupper($locale)" wire:model.defer="name.{{ $locale }}" class="shadow-none"/>
+                        <x-bs::help label="{{ __('Назва компанії. Також додається до тексту тега title для унікалізації') }}"/>
                     </div>
                     <div class="my-3">
                         <x-bs::textarea label="{{ __('Description').' '.strtoupper($locale) }}" class="shadow-none" wire:model.defer="description.{{$locale}}"/>

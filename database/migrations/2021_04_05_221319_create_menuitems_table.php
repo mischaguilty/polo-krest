@@ -17,8 +17,10 @@ class CreateMenuitemsTable extends Migration
         Schema::create('menuitems', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Menuitem::class, 'toplevel_id')->default(0);
-            $table->text('name');
-            $table->string('route_name')->default('about')->unique();
+            $table->string('menuable_type');
+            $table->unsignedBigInteger('menuable_id')->default(0);
+            $table->text('name')->nullable();
+            $table->string('route_name')->index();
             $table->unsignedInteger('position')->nullable()->default(0)->index();
             $table->timestamps();
         });

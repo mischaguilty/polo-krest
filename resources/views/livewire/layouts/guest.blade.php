@@ -59,9 +59,21 @@
                             <ul>
                                 @forelse(\App\Models\Menuitem::topmenu()->get() as $item)
                                     <li class="{{ $item->children_count ? 'dropdown' : '' }}">
-                                        <a href="{{ route($item->route_name) }}">
+                                        <a href="{{ $item->children_count ? '#' : route($item->route_name) }}">
                                             {{ $item->name }}
                                         </a>
+                                        @if($item->children_count !== 0)
+                                            <ul class="dropdown-menu">
+                                            @forelse($item->children() as $subItem)
+                                                    <li>
+                                                        <a href="{{ route($loop->first ? $item->route_name : $subItem->route_name, $loop->first ? [] : [Str::slug($subItem->name)]) }}">
+                                                            {{ $subItem->name }}
+                                                        </a>
+                                                    </li>
+                                            @empty
+                                            @endforelse
+                                            </ul>
+                                        @endif
                                     </li>
                                 @empty
                                 @endforelse
