@@ -51,41 +51,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
-
-//
-//        Route::bind('serviceGroup', function ($value) {
-////            dd($value);
-//        });
-
-        Route::bind('productGroup', function ($value) {
-            return optional(ProductGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
-                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
-                        $builder->where([
-                            implode('->', [
-                                'name',
-                                app()->getLocale(),
-                            ]) => $value,
-                        ]);
-                    });
-                })->first() ?? null, function (ProductGroup $productGroup) {
-                return $productGroup;
-            });
-        });
-//
-//        Route::bind('serviceGroup', function ($value) {
-//            return optional(ServiceGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
-//                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
-//                        $builder->where([
-//                            implode('->', [
-//                                'name',
-//                                app()->getLocale(),
-//                            ]) => $value,
-//                        ]);
-//                    });
-//                })->first() ?? null, function (ServiceGroup $serviceGroup) {
-//                return $serviceGroup;
-//            });
-//        });
     }
 
     /**
