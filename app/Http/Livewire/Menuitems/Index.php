@@ -19,6 +19,8 @@ class Index extends Component
 
     protected $listeners = ['$refresh'];
 
+    public int $open = -1;
+
     public function route()
     {
         return Route::get('menu', static::class)
@@ -26,11 +28,26 @@ class Index extends Component
             ->middleware('auth');
     }
 
+    public function updatingOpen($value)
+    {
+        $this->open = $this->open === $value ? -1 : $value;
+    }
+
     public function render()
     {
         return view('menuitems.index', [
             'menuitems' => $this->query()->paginate(),
         ]);
+    }
+
+    public function showSubs($id)
+    {
+        if(in_array($id, $this->subs)) {
+            unset($this->subs[$id]);
+        } else {
+            $this->subs[] = $id;
+        }
+        $this->emit('$refresh');
     }
 
     public function query()

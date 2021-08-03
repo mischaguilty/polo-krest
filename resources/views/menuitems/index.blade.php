@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="list-group mb-3">
+    <div class="list-group mb-3" x-data="{opened: null}">
         @forelse($menuitems as $menuitem)
             <div class="list-group-item list-group-item-action d-inline-flex justify-content-start">
                 <div class="d-inline-flex align-items-center flex-shrink-1 p-1">
@@ -46,6 +46,11 @@
                         <p class="small text-muted mb-0">@displayDate($menuitem->created_at)</p>
                     </div>
                     <div class="d-flex gap-2">
+                        @if($menuitem->children()->count() > 0)
+                            <x-bs::button icon="list" :title="__('Items')" color="outline-primary" size="sm"
+                                wire:click="$set('open', {{ $open === $menuitem->id ? -1 : $menuitem->id }})"/>
+                        @endif
+
                         <x-bs::button icon="eye" :title="__('Read')" color="outline-primary" size="sm"
                             wire:click="$emit('showModal', 'menuitems.read', {{ $menuitem->id }})"/>
 
@@ -57,6 +62,40 @@
                     </div>
                 </div>
             </div>
+            @if($menuitem->children()->count() > 0)
+                <div class="px-5" {{ $open === $menuitem->id ? '' : 'hidden' }}>
+                    <div class="list-group">
+                        @forelse($menuitem->children() as $subItem)
+                            <div class="list-group-item list-group-item-action d-inline-flex justify-content-start">
+                                <div class="d-inline-flex align-items-center flex-shrink-1 p-1">
+                                    <x-bs::button color="primary" class="shadow-none" wire:click="positionUp({{ $subItem->id }})">
+                                        <x-bs::icon name="arrow-up" />
+                                    </x-bs::button>
+                                    <span class="text-primary mx-3 mt-auto mb-auto">{{ intval($subItem->position) }}</span>
+                                    <x-bs::button color="primary" class="shadow-none" wire:click="positionDown({{ $subItem->id }})">
+                                        <x-bs::icon name="arrow-down" />
+                                    </x-bs::button>
+                                </div>
+                                <div class="align-items-center flex-fill p-1 d-inline-flex justify-content-between">
+                                    <div class="mb-3 mb-lg-0">
+                                        <x-bs::link :label="$subItem->name" wire:click.prevent="$emit('showModal', 'menuitems.read', {{ $subItem->id }})" />
+                                        <p class="small text-muted mb-0">@displayDate($subItem->created_at)</p>
+                                    </div>
+                                </div>
+                                <x-bs::button icon="eye" :title="__('Read')" color="outline-primary" size="sm"
+                                              wire:click="$emit('showModal', 'menuitems.read', {{ $subItem->id }})"/>
+
+                                <x-bs::button icon="pencil-alt" :title="__('Update')" color="outline-primary" size="sm"
+                                              wire:click="$emit('showModal', 'menuitems.save', {{ $subItem->id }})"/>
+
+                                <x-bs::button icon="trash-alt" :title="__('Delete')" color="outline-primary" size="sm"
+                                              wire:click="delete({{ $subItem->id }})" confirm/>
+                            </div>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+            @endif
         @empty
             <div class="list-group-item">
                 {{ __('No results to display.') }}

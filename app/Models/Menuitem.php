@@ -43,6 +43,14 @@ class Menuitem extends Model
                         }
                     });
                 }
+                if (method_exists($model, 'menuable')) {
+                    optional($model->menuable()->first() ?? null, function (Model $menuable) use ($model) {
+                        foreach (LaravelLocalization::getSupportedLocales() as $localeKey => $supportedLocale) {
+                            $menuable->setTranslation('name', $localeKey, $model->getTranslation('name', $localeKey));
+                            $menuable->save();
+                        }
+                    });
+                }
             });
         });
     }
@@ -67,7 +75,7 @@ class Menuitem extends Model
     {
         return Menuitem::query()->where([
             'toplevel_id' => $this->getKey(),
-        ])->get();
+        ])->orderBy('position')->get();
     }
 
     public function getChildrenCountAttribute(): int
