@@ -11,7 +11,7 @@ class Guest extends Component
 {
     public function render()
     {
-        return view('livewire.layouts.guest')->with([
+        return view('layouts.guest')->with([
             'logo' => optional(View::shared('company') ?? null, function (Company $company) {
                 return optional($company->getFirstMedia('logo') ?? null, function (Media $media) {
                     return $media;

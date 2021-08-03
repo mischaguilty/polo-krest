@@ -26,6 +26,6 @@ class Services extends Component
 
     public function render()
     {
-        return view('livewire.services')->layout('livewire.layouts.guest');
+        return view('livewire.services')->layout('layouts.guest');
     }
 }

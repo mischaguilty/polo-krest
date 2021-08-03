@@ -20,12 +20,12 @@ class Cemeteries extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.cemeteries'), static::class)->name('cemeteries');
+            Route::get(LaravelLocalization::transRoute('routes.cemeteries.list'), static::class)->name('cemeteries.list');
         });
     }
 
     public function render()
     {
-        return view('livewire.cemeteries')->layout('livewire.layouts.guest');
+        return view('livewire.cemeteries')->layout('layouts.guest');
     }
 }

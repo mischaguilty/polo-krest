@@ -3,9 +3,9 @@ return [
     'welcome' => '',
     'about' => 'o-nas',
     'contacts' => 'kontakty',
-    'cemeteries' => 'kladbischa',
-    'products.show' => 'atributika',
+    'cemeteries.list' => 'kladbischa',
+    'products.show' => 'atributika/{productGroup}',
     'products.index' => 'atributika',
-    'services.show' => 'uslugi',
+    'services.show' => 'uslugi/{serviceGroup}',
     'services.index' => 'uslugi',
 ];

@@ -23,7 +23,7 @@ class Index extends Component
     public function route()
     {
         return Route::get('cemeteries', static::class)
-            ->name('cemeteries.index')
+            ->name('cemeteries')
             ->middleware('auth');
     }
 

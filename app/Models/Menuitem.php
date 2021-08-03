@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Str;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Spatie\Translatable\HasTranslations;
 
@@ -37,21 +35,9 @@ class Menuitem extends Model
         static::saved(function (Model $model) {
             optional($model->isDirty('name') ? $model->load(['slug']) : null, function (Model $model) {
                 if (method_exists($model, 'slug')) {
-                    optional($model->slug ?? $model->slug()->create(), function (Slug $slug) {
+                    optional($model->slug()->firstOrCreate() ?? null, function (Slug $slug) use ($model) {
                         foreach (LaravelLocalization::getSupportedLocales() as $localeKey => $supportedLocale) {
-                            $ruleSetName = optional($supportedLocale['name'] ?? null, function (string $supportedLocaleName) {
-                                return strtolower($supportedLocaleName);
-                            });
-                            $localizedSlugName = optional($ruleSetName ?? null, function (string $ruleSetName) use ($slug, $localeKey) {
-                                    try {
-                                        $slugify = new Slugify();
-                                        $slugify->activateRuleSet($ruleSetName);
-                                        return $slugify->slugify($slug->sluggable->getTranslation('name', $localeKey));
-                                    } finally {
-                                        return Str::slug($slug->sluggable->getTranslation('name', $localeKey));
-                                    }
-                                }) ?? Str::slug($slug->sluggable->getTranslation('name', $localeKey));
-
+                            $localizedSlugName = slug($model->getTranslation('name', $localeKey), $localeKey);
                             $slug->setTranslation('name', $localeKey, $localizedSlugName);
                             $slug->save();
                         }

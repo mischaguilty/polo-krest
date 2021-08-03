@@ -26,6 +26,6 @@ class About extends Component
 
     public function render()
     {
-        return view('livewire.about')->layout('livewire.layouts.guest');
+        return view('livewire.about')->layout('layouts.guest');
     }
 }

@@ -28,12 +28,12 @@ class ProductItem extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.products.show').'/{productGroup}', static::class)->name('products.show');
+            Route::get(LaravelLocalization::transRoute('routes.products.show'), static::class)->name('products.show');
         });
     }
 
     public function render()
     {
-        return view('livewire.product-item')->layout('livewire.layouts.guest');
+        return view('livewire.product-item')->layout('layouts.guest');
     }
 }

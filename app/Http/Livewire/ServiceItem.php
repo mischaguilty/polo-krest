@@ -23,7 +23,7 @@ class ServiceItem extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get(LaravelLocalization::transRoute('routes.services.show').'/{serviceGroup}', static::class)->name('services.show');
+            Route::get(LaravelLocalization::transRoute('routes.services.show'), static::class)->name('services.show');
         });
     }
 
@@ -34,6 +34,6 @@ class ServiceItem extends Component
 
     public function render()
     {
-        return view('livewire.service-item')->layout('livewire.layouts.guest');
+        return view('livewire.service-item')->layout('layouts.guest');
     }
 }

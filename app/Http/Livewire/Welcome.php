@@ -37,6 +37,6 @@ class Welcome extends Component
                     'text' => 'Lorem Ipsum'
                 ],
             ],
-        ])->layout('livewire.layouts.guest');
+        ])->layout('layouts.guest');
     }
 }

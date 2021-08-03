@@ -7,17 +7,16 @@
     "require": {
         "php": "^7.3|^8.0",
         "bastinald/laravel-livewire-ui": "^2.4.16",
-        "cocur/slugify": "dev-real_ukranian",
         "fideloper/proxy": "^4.4.1",
         "fruitcake/laravel-cors": "^2.0.4",
         "guzzlehttp/guzzle": "^7.3.0",
         "laravel-notification-channels/telegram": "^0.5.1",
-        "laravel/framework": "^8.51.0",
+        "laravel/framework": "^8.52.0",
         "laravel/tinker": "^2.6.1",
         "lorisleiva/laravel-actions": "^2.1.5",
-        "mcamara/laravel-localization": "^1.6",
-        "propaganistas/laravel-phone": "^4.3.0",
-        "spatie/laravel-medialibrary": "^9.6",
+        "mcamara/laravel-localization": "^1.6.1",
+        "propaganistas/laravel-phone": "^4.3.1",
+        "spatie/laravel-medialibrary": "^9.7.1",
         "spatie/laravel-translatable": "^5.0.1"
     },
     "require-dev": {
@@ -25,8 +24,8 @@
         "fakerphp/faker": "^v1.15.0",
         "laravel/sail": "^v1.15.0",
         "mockery/mockery": "^1.4.3",
-        "nunomaduro/collision": "^5.5.0",
-        "phpunit/phpunit": "^9.5.7"
+        "nunomaduro/collision": "^5.6.0",
+        "phpunit/phpunit": "^9.5.8"
     },
     "autoload": {
         "psr-4": {
@@ -52,15 +51,10 @@
             "@php artisan key:generate --ansi"
         ]
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/mischaguilty/slugify"
-        }
-    ],
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+            ]
         }
     },
     "config": {
