@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\FoundBySlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Schema\Blueprint;
+use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
 use Spatie\Translatable\HasTranslations;
 
-class ServiceGroup extends Model implements \Spatie\MediaLibrary\HasMedia
+class ServiceGroup extends Model implements \Spatie\MediaLibrary\HasMedia, LocalizedUrlRoutable
 {
     use HasFactory;
     use HasTranslations;
     use \Spatie\MediaLibrary\InteractsWithMedia;
+    use FoundBySlug;
 
     protected $guarded = [];
 

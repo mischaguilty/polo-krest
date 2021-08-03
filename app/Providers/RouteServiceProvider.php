@@ -10,6 +10,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -51,6 +52,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
+//
+//        Route::bind('serviceGroup', function ($value) {
+////            dd($value);
+//        });
+
         Route::bind('productGroup', function ($value) {
             return optional(ProductGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
                     $builder->whereHas('slug', function (Builder $builder) use ($value) {
@@ -65,21 +71,21 @@ class RouteServiceProvider extends ServiceProvider
                 return $productGroup;
             });
         });
-
-        Route::bind('serviceGroup', function ($value) {
-            return optional(ServiceGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
-                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
-                        $builder->where([
-                            implode('->', [
-                                'name',
-                                app()->getLocale(),
-                            ]) => $value,
-                        ]);
-                    });
-                })->first() ?? null, function (ServiceGroup $serviceGroup) {
-                return $serviceGroup;
-            });
-        });
+//
+//        Route::bind('serviceGroup', function ($value) {
+//            return optional(ServiceGroup::query()->whereHas('menuitem', function (Builder $builder) use ($value) {
+//                    $builder->whereHas('slug', function (Builder $builder) use ($value) {
+//                        $builder->where([
+//                            implode('->', [
+//                                'name',
+//                                app()->getLocale(),
+//                            ]) => $value,
+//                        ]);
+//                    });
+//                })->first() ?? null, function (ServiceGroup $serviceGroup) {
+//                return $serviceGroup;
+//            });
+//        });
     }
 
     /**

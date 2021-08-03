@@ -35,7 +35,7 @@
                                 <ul class="p-dropdown-content">
                                     @forelse(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeKey => $locale)
                                         <li>
-                                            <a href="{{ \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeKey) }}" class="{{ app()->getLocale() === $localeKey ? 'text-muted' : '' }}">
+                                            <a href="{{ \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeKey) }}">
                                                 {{ strtoupper($localeKey) }}
                                             </a>
                                         </li>
