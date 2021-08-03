@@ -1,6 +1,6 @@
 <?php
 return [
-    'welcome' => '',
+    'welcome' => '/',
     'about' => 'pro-nas',
     'contacts' => 'kontakty',
     'cemeteries.list' => 'kladovyshcha',

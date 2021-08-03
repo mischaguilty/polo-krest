@@ -1,22 +1,46 @@
 <div>
-    @section('slider')
-    <!-- Inspiro Slider -->
-    <div id="slider" class="inspiro-slider dots-creative" data-height-xs="360">
-        <!-- Slide 2 -->
-        <div class="slide kenburns" style="background-image:url({{ url('default-bg.jpg') }});">
-            <div class="bg-overlay"></div>
-            <div class="container">
-                <div class="slide-captions text-center text-light">
-                    <!-- Captions -->
-                    <h1>{{ 'О нас' }}</h1>
-                    <!-- end: Captions -->
-                </div>
-            </div>
+@forelse($seo as $key => $value)
+    @php
+        if ($key === 'PageTitle') {
+            $key = 'title';
+        } else if ($key === 'PageDescription') {
+            $key = 'description';
+        } else if ($key === 'PageH1') {
+            $key = null;
+        }
+    @endphp
+    @isset($key)
+        @section($key, $value)
+    @endisset
+    @continue
+@empty
+    @section('title', Route::currentRouteName())
+@endforelse
+    <header class="dark mb-5">
+        <div class="breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{{ route('welcome') }}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    @forelse(request()->segments() as $segment)
+                        @if($loop->first)
+                            @continue
+                        @endif
+                        @if($loop->last)
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ $segment }}
+                            </li>
+                        @endif
+                    @empty
+                    @endforelse
+                </ol>
+            </nav>
         </div>
-        <!-- end: Slide 2 -->
-    </div>
-    <!--end: Inspiro Slider -->
-    @endsection
+        <h1 class="my-0">{!! $seo->get('PageH1') !!}</h1>
+    </header>
 
     <section>
         <div class="container">

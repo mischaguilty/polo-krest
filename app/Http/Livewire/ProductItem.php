@@ -3,12 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\ProductGroup;
+use App\Traits\NeedsSEO;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ProductItem extends Component
 {
+    use NeedsSEO;
+
     public ProductGroup $productGroup;
 
     public function mount(ProductGroup $productGroup)

@@ -2,12 +2,26 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Company;
+use App\Traits\NeedsSEO;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Livewire\Component;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Welcome extends Component
 {
+    use NeedsSEO;
+
+    public Company $company;
+
+    public function mount()
+    {
+        $this->company = optional(View::shared('company') ?? null, function (Company $company) {
+            return $company;
+        });
+    }
+
     public function route()
     {
         return Route::group([
@@ -20,7 +34,7 @@ class Welcome extends Component
                 'localeViewPath'
             ],
         ], function () {
-            Route::get('/', static::class)->name('welcome');
+            Route::get(LaravelLocalization::transRoute('routes.welcome'), static::class)->name('welcome');
         });
     }
 
@@ -29,13 +43,8 @@ class Welcome extends Component
         return view('livewire.welcome')->with([
             'slides' => [
                 [
-                    'picture' => 'default-bg.jpg',
-                    'text' => 'Lorem Ipsum'
-                ],
-                [
-                    'picture' => 'default-bg.jpg',
-                    'text' => 'Lorem Ipsum'
-                ],
+                'picture' => $this->company->getFirstMedia() ?? url('bg.jpg'),
+                    ],
             ],
         ])->layout('layouts.guest');
     }

@@ -1,190 +1,94 @@
 <div>
+    @forelse($seo as $key => $value)
+        @php
+            if ($key === 'PageTitle') {
+                $key = 'title';
+            } else if ($key === 'PageDescription') {
+                $key = 'description';
+            } else if ($key === 'PageH1') {
+                $key = null;
+            }
+        @endphp
+        @isset($key)
+            @section($key, $value)
+    @endisset
+    @continue
+    @empty
+        @section('title', Route::currentRouteName())
+    @endforelse
+    <header class="dark mb-5">
+        <div class="breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{{ route('welcome') }}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    @forelse(request()->segments() as $segment)
+                        @if($loop->first)
+                            @continue
+                        @endif
+                        @if($loop->last)
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ $segment }}
+                            </li>
+                        @endif
+                    @empty
+                    @endforelse
+                </ol>
+            </nav>
+        </div>
+        <h1 class="my-0">{!! $seo->get('PageH1') !!}</h1>
+    </header>
     <div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-image">
-                    <a href="#">
-                        <img alt="" src="images/blog/12.jpg">
-                    </a>
-                    <span class="post-meta-category"><a href="">Lifestyle</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Standard post with a single image
-                        </a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item YouTube-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-video">
-                    <iframe width="560" height="320" src="https://www.youtube.com/embed/dA8Smj5tZOQ" frameborder="0" allowfullscreen></iframe>
-                    <span class="post-meta-category"><a href="">Video</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">This is a example post with YouTube</a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More </a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item YouTube-->
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-slider">
-                    <div class="carousel dots-inside arrows-visible arrows-only" data-items="1" data-loop="true" data-autoplay="true" data-lightbox="gallery">
-                        <a href="images/blog/11.jpg" data-lightbox="gallery-image">
-                            <img alt="" src="images/blog/16.jpg">
-                        </a>
-                        <a href="images/blog/16.jpg" data-lightbox="gallery-image">
-                            <img alt="" src="images/blog/11.jpg">
+        @forelse($productGroups as $productGroup)
+            <div class="post-item border">
+                <div class="post-item-wrap">
+                    @forelse($productGroup->getMedia('images') as $media)
+                        @if($loop->first)
+                            <div class="post-slider">
+                                <div class="carousel dots-inside arrows-visible arrows-only"
+                                     data-items="{{ $loop->count }}" data-loop="true" data-autoplay="true"
+                                     data-lightbox="gallery">
+                                    @endif
+                                    <a href="{{ $media->getFullUrl() }}" data-lightbox="gallery-image">
+                                        <img src="{{ $media->getFullUrl() }}" alt="{{ $media->name }}">
+                                    </a>
+                                    @if($loop->last)
+                                </div>
+                            </div>
+                        @endif
+                    @empty
+                        <div class="post-image">
+                            <a href="{{ route('products.show', [slug($productGroup->name)]) }}">
+                                <img src="http://placehold.it/500x300.jpg"
+                                     alt="{{ __('Product\'s image placeholder') }}"/>
+                            </a>
+                        </div>
+                    @endforelse
+                    <div class="post-item-description">
+                        <span class="post-meta-date">
+                            <i class="fa fa-calendar-o"></i>
+                            {{ $productGroup->updated_at }}
+                        </span>
+                        {{--                        <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>--}}
+                        <h2>
+                            <a href="{{ route('products.show', [slug($productGroup->name, app()->getLocale())]) }}">
+                                {{ $productGroup->name }}
+                            </a>
+                        </h2>
+                        <p class="text-secondary">
+                            {{ $productGroup->description }}
+                        </p>
+                        <a href="{{ route('products.show', [slug($productGroup->name)]) }}" class="item-link">
+                            {{ __('Докладніше') }}
+                            <i class="icon-chevron-right"></i>
                         </a>
                     </div>
-                    <span class="post-meta-category"><a href="">Technology</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Simplicity, a post with slider gallery</a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet. Pulvinar euismod antesagittis ante posuere ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
                 </div>
             </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item Vimeo-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-video">
-                    <iframe src="https://player.vimeo.com/video/198559065?title=0&byline=0&portrait=0" width="560" height="320" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                    <span class="post-meta-category"><a href="">Video</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">This is a example post with Vimeo video</a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.
-                        Cagittis ante posuere ac. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item Vimeo-->
-        <!-- Post item HTML5 Audio-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-audio">
-                    <a href="#">
-                        <img alt="" src="images/blog/audio-bg.jpg">
-                    </a>
-                    <span class="post-meta-category"><a href="">Audio</a></span>
-                    <audio class="video-js vjs-default-skin" controls preload="false" data-setup="{}">
-                        <source src="audio/beautiful-optimist.mp3" type="audio/mp3" />
-                    </audio>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Self Hosted HTML5 Audio (mp3) with image cover</a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ac sagittis ante posuere ac ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-image">
-                    <a href="#">
-                        <img alt="" src="images/blog/17.jpg">
-                    </a>
-                    <span class="post-meta-category"><a href="">Science</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Standard post with a single image
-                        </a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.
-                    </p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-image">
-                    <a href="#">
-                        <img alt="" src="images/blog/18.jpg">
-                    </a>
-                    <span class="post-meta-category"><a href="">Science</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Standard post with a single image
-                        </a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-slider">
-                    <div class="carousel dots-inside arrows-visible arrows-only" data-autoplay="2600" data-animate-in="fadeIn" data-animate-out="fadeOut" data-items="1" data-loop="true" data-autoplay="true" data-lightbox="gallery">
-                        <a href="images/blog/19.jpg" data-lightbox="gallery-image">
-                            <img alt="" src="images/blog/19.jpg">
-                        </a>
-                        <a href="images/blog/20.jpg" data-lightbox="gallery-image">
-                            <img alt="" src="images/blog/20.jpg">
-                        </a>
-                    </div>
-                    <span class="post-meta-category"><a href="">Technology</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Simplicity, a post with slider gallery</a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
-        <!-- Post item-->
-        <div class="post-item border">
-            <div class="post-item-wrap">
-                <div class="post-image">
-                    <a href="#">
-                        <img alt="" src="images/blog/23.jpg">
-                    </a>
-                    <span class="post-meta-category"><a href="">Science</a></span>
-                </div>
-                <div class="post-item-description">
-                    <span class="post-meta-date"><i class="fa fa-calendar-o"></i>Jan 21, 2017</span>
-                    <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                    <h2><a href="#">Standard post with a single image
-                        </a></h2>
-                    <p>Curabitur pulvinar euismod ante, ac sagittis ante posuere ac. Vivamus luctus commodo dolor porta feugiat. Fusce at velit id ligula pharetra laoreet.</p>
-                    <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-        <!-- end: Post item-->
+        @empty
+        @endforelse
     </div>
 </div>

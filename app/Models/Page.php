@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Cocur\Slugify\Slugify;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -51,15 +49,5 @@ class Page extends Model
     public function slug(): BelongsTo
     {
         return $this->belongsTo(Slug::class, 'slug_id', 'id');
-    }
-
-    public function resolveRouteBinding($value, $field = null)
-    {
-        return Page::query()->whereHas('slug', function (Builder $builder) use ($value) {
-            $stringify = new Slugify();
-            $locale = app()->getLocale();
-            $stringify->activateRuleSet(strtolower($locale));
-            $builder->where("name->$locale", '=', $value);
-        })->first();
     }
 }

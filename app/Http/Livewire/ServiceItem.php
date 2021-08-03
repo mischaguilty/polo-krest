@@ -3,12 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\ServiceGroup;
+use App\Traits\NeedsSEO;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ServiceItem extends Component
 {
+    use NeedsSEO;
+
     public ServiceGroup $serviceGroup;
 
     public function route()

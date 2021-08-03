@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Traits\NeedsSEO;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Cemeteries extends Component
 {
+    use NeedsSEO;
+
     public function route()
     {
         return Route::group([

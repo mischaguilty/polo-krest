@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Notifications\Notifiable;
+use Mcamara\LaravelLocalization\Interfaces\LocalizedUrlRoutable;
 use Spatie\Translatable\HasTranslations;
 
 class Company extends Model implements HasMedia
@@ -72,5 +73,10 @@ class Company extends Model implements HasMedia
 //        ]), function (Social $social) {
 //            return $social->chat_id;
 //        });
+    }
+
+    public function page()
+    {
+        return $this->morphMany(Page::class, 'pageable', 'pageable_type', 'pageable_id', 'id');
     }
 }

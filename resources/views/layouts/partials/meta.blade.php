@@ -17,9 +17,9 @@
 @endforelse
 <link rel="alternate" media="only screen and (max-width: 640px)" href="{{ url()->current() }}">
 
-@hasSection('schema')
-    @include('livewire.schema-org')
-@endif
+{{--@hasSection('schema')--}}
+{{--    @include('livewire.schema-org')--}}
+{{--@endif--}}
 @hasSection('description')
     <meta name="description" content="@yield('description')">
     <meta property="og:description" content="@yield('description')">
@@ -40,16 +40,16 @@
     <meta property="og:image" content="{{ $logo->getFullUrl() }}">
 @endif
 
-{{--@forelse($company->offices as $office)--}}
-{{--    @if($address = $office->address)--}}
-{{--    @isset($address->geo_region)--}}
-{{--        <meta name="geo.region" content="{{ $address->geo_region }}">--}}
-{{--    @endisset--}}
-{{--    <meta name="geo.placename" content="{{ $address->geo_placename }}">--}}
-{{--    <meta name="geo.position" content="{{ $address->geo_position }}">--}}
-{{--    <meta name="ICBM" content="{{ $address->icmb_content }}">--}}
-{{--    <meta name="DC.title" content="{{ $company->dc_title }}">--}}
-{{--    @endif--}}
-{{--    @break--}}
-{{--    @empty--}}
-{{--@endforelse--}}
+@forelse($company->offices as $office)
+    @if($address = $office->address)
+    @isset($address->geo_region)
+        <meta name="geo.region" content="{{ $address->geo_region }}">
+    @endisset
+    <meta name="geo.placename" content="{{ $address->geo_placename }}">
+    <meta name="geo.position" content="{{ $address->geo_position }}">
+    <meta name="ICBM" content="{{ $address->icmb_content }}">
+    <meta name="DC.title" content="{{ $company->dc_title }}">
+    @endif
+    @break
+    @empty
+@endforelse

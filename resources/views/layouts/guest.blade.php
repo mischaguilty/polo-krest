@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 
-@include('layouts.partials.head')
+@include('layouts.partials.head', ['seo' => $seo])
 
 <body>
 <!-- Body Inner -->
 <div class="body-inner">
 @include('layouts.partials.topbar')
 <!-- Header -->
-    <header id="header" data-transparent="true" class="dark">
+    <header id="header" @hasSection('slider') data-transparent="true" @endif class="dark">
         <div class="header-inner">
             <div class="container">
                 <!--Logo-->
                 <div id="logo">
                     <a href="{{ route('welcome') }}">
-                        <span class="logo-default">
+                        @if($logo = $company->getFirstMedia('logo'))
+                            <img src="{{ $logo->getFullUrl() }}" alt="{{ $logo->name }}">
+                        @endif
+                        <span class="logo-default font-weight-400">
                             {{ $company->name }}
                         </span>
-                        <span class="logo-dark">
+                        <span class="logo-dark font-weight-400">
                             {{ $company->name }}
                         </span>
                     </a>
@@ -63,7 +66,7 @@
                                             {{ $item->name }}
                                         </a>
                                         @if($item->children_count !== 0)
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu text-light">
                                                 <li>
                                                     <a href="{{ route($item->route_name) }}">
                                                         {{ $item->name }}
@@ -97,85 +100,6 @@
 <!-- Content -->
     <section id="page-content">
         <div class="container">
-{{--            <div class="grid-system-demo-live">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-lg-12 p-t-80 p-b-20">--}}
-{{--                        <div class="heading-text heading-section">--}}
-{{--                            <h2>Set your goals high, and don't stop till you get there.</h2>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-12">--}}
-{{--                        Vitae adipiscing turpis. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In--}}
-{{--                        iaculis viverra neque, ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum--}}
-{{--                        stie. Aenean ligula nibh, molestie id viverra a, dapibus at dolor. In iaculis viverra neque,--}}
-{{--                        ac ele molestie id viverra aifend ante lobortis id. In viverra ipsum.--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-lg-6">--}}
-{{--                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                        ante lobortis id. In viverra ipsum stie.--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-6">--}}
-{{--                        <h5>1/2 Width (col-lg-6)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                        ante lobortis id. In viverra ipsum stie.--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-lg-4">--}}
-{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                        ante lobortis id. In viverra ipsum stie.--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-4">--}}
-{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                        ante lobortis id. In viverra ipsum stie.--}}
-{{--                    </div>--}}
-{{--                    <div class="col-lg-4">--}}
-{{--                        <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                        viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                        ante lobortis id. In viverra ipsum stie.--}}
-{{--                    </div>--}}
-{{--                    r--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-lg-3">--}}
-{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-3">--}}
-{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-3">--}}
-{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-3">--}}
-{{--                            <h5>1/4 Width (col-lg-3)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-lg-4">--}}
-{{--                            <h5>1/3 Width (col-lg-4)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-8">--}}
-{{--                            <h5>2/3 Width (col-lg-8)</h5>Vitae adipiscing turpis. Aenean ligula nibh, molestie id--}}
-{{--                            viverra a, dapibus at dolor. In iaculis viverra neque, ac ele molestie id viverra aifend--}}
-{{--                            ante lobortis id. In viverra ipsum stie.--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
             {{ $slot }}
         </div>
     </section>
